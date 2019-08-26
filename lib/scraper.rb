@@ -1,28 +1,38 @@
+require 'nokogiri'
 require 'open-uri'
 require 'pry'
 
 class Scraper
 
   def self.scrape_index_page(index_url)
-    collection = nil
-    html = open(index_url)
-    doc = Nokogiri::HTML(html)
-    doc.css("div.card-text-container").each do |student|
-    student_name = student.css("h4.student-name").text
-    student_location = student.css(".student-location").text
-    #student_link = 
-    collection = [{:name => student_name, :location => student_location}] #:profile_url = student_link
-    binding.pry
+    doc = Nokogiri::HTML(open(index_url)).css(".student-card")
+    doc.map do |info| 
+      name = info.css("h4.student-name").text
+      location = info.css("p.student-location").text
+      link = info.css("a @href").text
+      {:name => name, :location => location, :profile_url => link}
     end
-    collection
   end
 
   def self.scrape_profile_page(profile_url)
-    
-  end
+    collection = {}
+    doc = Nokogiri::HTML(open(profile_url))
+    links = doc.css("div.social-icon-container a").collect{|l| l["href"]}
+    links.each do |link|     
+      if link.include?("twitter")
+        collection[:twitter] = link
+      elsif link.include?("linkedin")
+        collection[:linkedin] = link 
+      elsif link.include?("github")
+        collection[:github] = link 
+      elsif link.include?(".com")
+        collection[:blog] = link 
+        end
+      end
+      collection[:bio] =  doc.css("div.bio-content.content-holder").css("div.description-holder").text.strip
+      collection[:profile_quote] = doc.css(".profile-quote").text.strip
+      collection
+    end
 
 end
 
-# :name => doc.css("div.card-text-container").first.css("h4.student-name").text
-# :location => project.css("div.card-text-container").first.css(".student-location").text
-# :profile_url => 

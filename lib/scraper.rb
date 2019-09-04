@@ -1,16 +1,11 @@
 require 'open-uri'
 require 'pry'
 require 'nokogiri'
- 
-
-html = open(https://learn-co-curriculum.github.io/student-scraper-test-page)
 
 
 class Scraper
 # take the string of HTML returned
 # by open-uri's `open` method and converts it into a NodeSet 
-
-doc = Nokogiri::HTML(html)
 
   def self.scrape_index_page(index_url)
     doc = Nokogiri::HTML(open("index_url"))

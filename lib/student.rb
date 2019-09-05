@@ -3,7 +3,6 @@ doc = Nokogiri::HTML(open("https://learn-co-curriculum.github.io/student-scraper
 # html = open(https://learn-co-curriculum.github.io/student-scraper-test-page/index.html)
 # doc.css(".roster-cards-container").text
 doc.css(".roster-cards-container").text
-binding.pry
 print doc.css(".roster-cards-container").text
 
 class Student

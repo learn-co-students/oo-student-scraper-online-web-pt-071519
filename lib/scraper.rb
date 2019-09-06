@@ -1,30 +1,28 @@
 require 'pry'
 require 'open-uri'
 require 'nokogiri'
-# html = open("https://learn-co-curriculum.github.io/student-scraper-test-page/#"))
-
-
+# html = open("https://learn-co-curriculum.github.io/student--test-page/#"))
 
 class Scraper
   def self.scrape_index_page(index_url)
     students = []
     doc = Nokogiri::HTML(open(index_url))
 
-    doc.css(".roster-cards-container").each do |all_students| # .strip.gsub(/[\n]/,"")
-      all_students.css(".student-card a").each do |student|
-        student_url = ("#{student.attr('href')}").text
-        student_name = student.css("student-name").text
-        student_location = student.css("student-location").text
-        # binding.pry
-        students << {name: student_name, location: student_location, student_url: student_url}
-      end
+    # {name: doc_noko.css('h4').text#.strip.split(",  ") , location: doc_noko.css('p'),url: doc_noko.css('a div')
+    # } 
+    binding.pry
+
+    doc.css('h4').each do |student_name| # .strip.gsub(/[\n]/,"")
+      students = {name: student_name.text}
+    end
+    doc.css('p').each do |student_location|
+      students = {location: student_location.text}
+    end
+    doc.css('a div').each |student_url|
+      students = {student_url: student_url.text}
     end
     students
-  
- 
-
-    
-  end
+end
 
   def self.scrape_profile_page(profile_url)
     

@@ -27,7 +27,6 @@ end
     student_hash = {}
 
     url_hash.each do |site|
-      # binding.pry 
       if url_hash.include?("twitter")
         student_hash[:twitter] = site
       elsif url_hash.include?("linkedin")
@@ -49,7 +48,8 @@ end
       student_hash[:bio] = profile_doc.css("div.bio-content.content-holder div.description-holder p").text 
     end
    
-
+      binding.pry 
+# 
 
       return student_hash
     

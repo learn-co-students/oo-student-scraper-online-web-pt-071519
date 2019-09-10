@@ -22,23 +22,25 @@ end
 
   def self.scrape_profile_page(profile_url)   # scrapes a student's profile page and returns a hash of attributes
     profile_doc = Nokogiri::HTML(open(profile_url))
-    url_hash = profile_doc.css("div.social-icon-container").children.css("a").map {|url| url.attribute('href').value}
+    url_hash = profile_doc.css(".social-icon-container").children.css("a").map {|url| url.attribute('href').value}
    
     student_hash = {}
 
     url_hash.each do |site|
-      if url_hash.include?("twitter")
+      if site.include?("twitter")
         student_hash[:twitter] = site
-      elsif url_hash.include?("linkedin")
+      elsif site.include?("linkedin")
         student_hash[:linkedin] = site
-      elsif url_hash.include?("github")
+      elsif site.include?("github")
         student_hash[:github] = site
-      elsif url_hash.include?("blog")
+      else
         student_hash[:blog] = site
+       
+        # binding.pry 
 
       end
     end
-    binding.pry 
+
 
    
 

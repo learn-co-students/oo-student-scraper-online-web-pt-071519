@@ -38,7 +38,8 @@ end
 
       end
     end
-  
+    binding.pry 
+
    
 
     if profile_doc.css("div.profile-quote")  
@@ -48,7 +49,6 @@ end
       student_hash[:bio] = profile_doc.css("div.bio-content.content-holder div.description-holder p").text 
     end
    
-      binding.pry 
 # 
 
       return student_hash
